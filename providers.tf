@@ -3,6 +3,7 @@ terraform {
     aws = {
       source = "hashicorp/aws"
     }
+    
   }
 }
 
@@ -12,7 +13,7 @@ provider "aws" {
   default_tags {
     tags = {
       Owner = "alvin"
-      ManagedBy = "opentofu"
+      ManagedBy = "alvin using opentofu"
     }
   }
 }

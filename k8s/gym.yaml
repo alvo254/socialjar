@@ -1,21 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
+  name: react
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
-      app: myapp
+      app: react
   template:
     metadata:
       labels:
-        app: myapp
+        app: react
     spec:
       containers:
-      - name: myapp
+      - name: react
         image: alvin254/fitnesshero:v1.0.0
-        imagePullPolicy: Always
         resources:
           limits:
             memory: "128Mi"
@@ -24,15 +23,16 @@ spec:
         - containerPort: 3000
 
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: react-app-service
+  name: gym-app-service
 spec:
   selector:
-    app: myapp
+    app: react
   ports:
-    - protocol: TCP
-      port: 3000
-      targetPort: 3000
-  type:  NodePort
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: NodePort
