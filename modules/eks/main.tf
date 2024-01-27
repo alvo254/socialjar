@@ -17,7 +17,7 @@ resource "aws_eks_cluster" "jar" {
 }
 
 resource "aws_iam_role" "eks-iam-role" {
- name = "cil-academy-eks-cluster-role"
+ name = "jar-eks-cluster-role"
 
  path = "/"
 
