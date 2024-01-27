@@ -35,9 +35,6 @@ Designate objects for development, test, and production
 Embed version tags
 Classify an object using tags
 
-
-
-
 Labels can be attached to objects at creation time or later on. They can be modified at any time. Let's expose our application now using a Service and apply some labels.
 
 Step 1: Creating a new Service
@@ -139,3 +136,10 @@ This proves that the application is not reachable anymore from outside of the cl
 kubectl exec -ti $POD_NAME -- curl http://localhost:8080
 
 We see here that the application is up. This is because the Deployment is managing the application. To shut down the application, you would need to delete the Deployment as well.
+
+
+
+## Connecting to eks with kubectl
+aws eks --region <region> update-kubeconfig --name <cluster_name> --profile dev
+
+
