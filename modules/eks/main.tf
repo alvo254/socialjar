@@ -48,6 +48,25 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly-EK
  role    = aws_iam_role.eks-iam-role.name
 }
 
+data "template_file" "user_data" {
+  template = file("${path.module}/worker-node-policy.json")
+}
+
+
+# Define the IAM policy for AmazonEKS_CNI_Policy
+resource "aws_iam_policy" "worker_node_policy" {
+  name        = "AmazonEKS_worker_node_Policy"
+  description = "IAM policy for Amazon nodes"
+  
+  # Specify the policy document
+  policy = data.template_file.user_data.rendered
+}
+
+resource "aws_iam_role_policy_attachment" "eks_worker_node_attachment" {
+  policy_arn = aws_iam_policy.worker_node_policy.arn
+  role       = aws_iam_role.eks-iam-role.name
+}
+
 resource "aws_eks_node_group" "jar" {
   cluster_name    = aws_eks_cluster.jar.name
   node_group_name = "jar-group"
@@ -73,6 +92,60 @@ resource "aws_eks_node_group" "jar" {
     # aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly,
   ]
 }
+
+resource "kubernetes_node_taint" "jar" {
+  
+  metadata {
+    name = aws_eks_node_group.jar.node_group_name
+
+  }
+  taint {
+    key    = "node.cilium.io/agent-not-ready"
+    value  = "true"
+    effect = "NoExecute"
+  }
+}
+
+
+//To test
+# resource "null_resource" "delete_aws_cni" {
+#   provisioner "local-exec" {
+#     command = "curl -s -k -XDELETE -H 'Authorization: Bearer ${data.aws_eks_cluster_auth.eks_vpc_us_east_1.token}' -H 'Accept: application/json' -H 'Content-Type: application/json' '${data.aws_eks_cluster.eks_vpc_us_east_1.endpoint}/apis/apps/v1/namespaces/kube-system/daemonsets/aws-node'"
+#   }
+# }
+
+# resource "null_resource" "delete_kube_proxy" {
+#   provisioner "local-exec" {
+#     command = "curl -s -k -XDELETE -H 'Authorization: Bearer ${data.aws_eks_cluster_auth.eks_vpc_us_east_1.token}' -H 'Accept: application/json' -H 'Content-Type: application/json' '${data.aws_eks_cluster.eks_vpc_us_east_1.endpoint}/apis/apps/v1/namespaces/kube-system/daemonsets/kube-proxy'"
+#   }
+# }
+
+# resource "kubernetes_config_map" "cni_config" {
+#   metadata {
+#     name      = "cni-configuration"
+#     namespace = "kube-system"
+#   }
+#   data = {
+#     "cni-config" = <<EOF
+# {
+#   "cniVersion":"0.3.1",
+#   "name":"cilium",
+#   "plugins": [
+#     {
+#       "cniVersion":"0.3.1",
+#       "type":"cilium-cni",
+#       "eni": {
+#         "first-interface-index": 1,
+#         "subnet-tags":{
+#           "Usage":"pods"
+#         }        
+#       }
+#     }
+#   ]
+# }
+# EOF
+#   }
+# }
 
 # resource "kubernetes_pod_disruption_budget_v1" "jar" {
 #   metadata {
