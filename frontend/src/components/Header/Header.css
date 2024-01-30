@@ -1,0 +1,36 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+.logo{
+    width: 10rem;
+    height: 3rem;
+}
+.header-list{
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+    color: white;
+    padding-right: 120px;
+}
+.header-list > li:hover{
+    cursor: pointer;
+    color: var(--orange);
+}
+
+.pic{
+    text-decoration: none;
+}
+h1{
+    padding-left: 20px;
+
+}
+
+h1 a{
+    color: white;
+    text-decoration: none;
+}
+li a{
+    color: white;
+    text-decoration: none;
+}

@@ -3,16 +3,17 @@ terraform {
     aws = {
       source = "hashicorp/aws"
     }
+
   }
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region  = "us-east-1"
   profile = "alvo"
   default_tags {
     tags = {
-      Owner = "alvin"
-      ManagedBy = "opentofu"
+      Owner     = "alvin"
+      ManagedBy = "alvin using opentofu"
     }
   }
 }
