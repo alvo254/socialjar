@@ -6,3 +6,5 @@ terraform.tfstate.backup
 .terraform.lock.hcl
 .terraform.tfstate.lock.info
 frontend/node_modules
+*.tar
+alvo-ssh-keys.pem

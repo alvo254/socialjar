@@ -11,3 +11,7 @@ variable "subnet_id2" {
   description = "vpc id from vpc module"
   type = string
 }
+
+variable "security_group" {
+  description = "Id of the sg"
+}

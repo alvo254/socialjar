@@ -1,5 +1,6 @@
 # socialjar
 Using a Service to Expose Your App
+
 Objectives
 Learn about a Service in Kubernetes
 Understand how labels and selectors relate to a Service
@@ -141,5 +142,4 @@ We see here that the application is up. This is because the Deployment is managi
 
 ## Connecting to eks with kubectl
 aws eks --region <region> update-kubeconfig --name <cluster_name> --profile dev
-
 

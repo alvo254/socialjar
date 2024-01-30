@@ -1,0 +1,52 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ec2:DescribeInstances",
+          "ec2:DescribeRegions",
+          "ec2:DescribeRouteTables",
+          "ec2:DescribeSecurityGroups",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeVolumes",
+          "ec2:CreateSecurityGroup",
+          "ec2:CreateTags",
+          "ec2:CreateRoute",
+          "ec2:CreateKeyPair",
+          "ec2:ModifyInstanceAttribute",
+          "ec2:ModifyVolume",
+          "ec2:AttachVolume",
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:DeleteTags",
+          "ec2:DeleteSecurityGroup",
+          "ec2:DeleteKeyPair",
+          "ec2:DetachVolume",
+          "ec2:RevokeSecurityGroupIngress"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "s3:GetObject"
+        ],
+        "Resource": [
+          "arn:aws:s3:::amazon-eks/*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "eks:DescribeNodegroup",
+          "eks:ListNodegroups",
+          "eks:DescribeUpdate",
+          "eks:UpdateNodegroupConfig",
+          "eks:UpdateClusterConfig",
+          "eks:TagResource",
+          "eks:UntagResource"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
